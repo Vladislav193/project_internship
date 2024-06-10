@@ -16,6 +16,7 @@ init_db(app)
 #
 
 
+
 @app.get("/users", response_model=List[User_Pydantic])
 async def get_users():
     return await User_Pydantic.from_queryset(User.all())
