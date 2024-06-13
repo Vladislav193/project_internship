@@ -33,3 +33,4 @@ def init_db(app: FastAPI) -> None:
         generate_schemas=True,
         add_exception_handlers=True,
     )
+
