@@ -9,7 +9,7 @@ class User(Model):
     login = fields.CharField(max_length=250)
     password = fields.CharField(max_length=250)
     email = fields.CharField(max_length=250)
-    division = fields.ForeignKeyField('models.Division', related_name='user')
+    division = fields.ForeignKeyField('models.Division', related_name='user', null=True)
 
     def __str__(self):
         return self.name
