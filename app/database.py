@@ -11,7 +11,7 @@ TORTOISE_ORM = {
                 'port': '5432',
                 'user': 'postgres',
                 'password': '12345',
-                'database': 'postgres',
+                'database': 'test2',
             }
         },
     },
