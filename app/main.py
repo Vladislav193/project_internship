@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.users.schemas import User_Pydantic, UserIn_Pydantic
-from app.division.schemas import Division_Pydantic
+from app.division.schemas import Division_Pydantic, DivisionIn_Pydantic
 from app.users.models import User
 from app.division.models import Division
 from app.database import init_db
@@ -22,8 +22,8 @@ async def get_user(user_id: int):
     return await User_Pydantic.from_queryset_single(User.get(id=user_id))
 
 
-@app.post("/division")
-async def division_add(division: Division_Pydantic) -> Any:
+@app.post("/division",  response_model=Division_Pydantic)
+async def division_add(division: DivisionIn_Pydantic):
     """Добавление Отдела"""
     division_obj = await Division.create(**division.model_dump(exclude_unset=True))
     return await Division_Pydantic.from_tortoise_orm(division_obj)

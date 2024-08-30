@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "user" (
     "login" VARCHAR(250) NOT NULL,
     "password" VARCHAR(250) NOT NULL,
     "email" VARCHAR(250) NOT NULL,
-    "division_id" INT NOT NULL REFERENCES "division" ("id") ON DELETE CASCADE
+    "division_id" INT REFERENCES "division" ("id") ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS "aerich" (
     "id" SERIAL NOT NULL PRIMARY KEY,
