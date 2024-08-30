@@ -3,12 +3,14 @@ from app.models import User_Pydantic, UserIn_Pydantic, User, Division, Division_
 from app.database import init_db
 from typing import List
 from typing import Any
+from tortoise import Tortoise
 
 from fastapi import Request
 from tortoise.contrib.pydantic import PydanticModel
-
+Tortoise.init_models(["app.models"], "models")
 app = FastAPI()
 init_db(app)
+
 
 
 @app.get("/users", response_model=List[User_Pydantic])
