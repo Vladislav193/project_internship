@@ -7,7 +7,7 @@ from app.database import init_db
 from typing import List
 from app.division.router import router as router_division
 from app.users.router import router as router_users
-
+from app.users.validator_business_trip import valid_business_trip
 app = FastAPI()
 init_db(app)
 
@@ -45,6 +45,8 @@ async def division_get():
 @router_users.post("/create", response_model=User_Pydantic)
 async def create_user(user: UserIn_Pydantic):
     """Тестовый вариант добавление юзера"""
+    if valid_business_trip(user) != None:
+        raise ValueError("командировка не может быть во время отпуска")
     user_obj = await User.create(**user.model_dump(exclude_unset=True))
     return await User_Pydantic.from_tortoise_orm(user_obj)
 
@@ -52,6 +54,8 @@ async def create_user(user: UserIn_Pydantic):
 @router_users.put("/{user_id}", response_model=User_Pydantic)
 async def update_user(user_id: int, user: UserIn_Pydantic):
     """Тестовый вариант поиска юзера по id"""
+    if valid_business_trip(user) != None:
+        raise ValueError("командировка не может быть во время отпуска")
     await User.filter(id=user_id).update(**user.model_dump(exclude_unset=True))
     return await User_Pydantic.from_queryset_single(User.get(id=user_id))
 
