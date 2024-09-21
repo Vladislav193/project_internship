@@ -8,6 +8,8 @@ from typing import List
 from app.division.router import router as router_division
 from app.users.router import router as router_users
 from app.users.validator_business_trip import valid_business_trip
+
+
 app = FastAPI()
 init_db(app)
 

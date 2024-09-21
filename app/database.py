@@ -1,19 +1,23 @@
+import os
+
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi import FastAPI
 from tortoise import Tortoise
+from dotenv import load_dotenv
 
+load_dotenv()
 
 
 TORTOISE_ORM = {
     'connections': {
         'default': {
-            'engine': 'tortoise.backends.asyncpg',
+            'engine': os.getenv('DB_ENGINE'),
             'credentials': {
-                'host': 'localhost',
-                'port': '5432',
-                'user': 'postgres',
-                'password': '12345',
-                'database': 'test2',
+                'host': os.getenv('DB_HOST'),
+                'port': os.getenv('DB_PORT'),
+                'user': os.getenv('DB_USER'),
+                'password': os.getenv('DB_PASSWORD'),
+                'database': os.getenv('DB_DATABASE'),
             }
         },
     },
