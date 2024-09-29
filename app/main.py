@@ -3,15 +3,19 @@ from app.users.schemas import User_Pydantic, UserIn_Pydantic
 from app.division.schemas import Division_Pydantic, DivisionIn_Pydantic
 from app.users.models import User
 from app.division.models import Division
-from app.database import init_db
+# from app.database import init_db
 from typing import List
 from app.division.router import router as router_division
 from app.users.router import router as router_users
 from app.users.validator_business_trip import valid_business_trip
+from .config import init
 
 
 app = FastAPI()
-init_db(app)
+
+@app.on_event("startup")
+async def startup_event():
+    await init()
 
 
 @router_users.get("/", response_model=List[User_Pydantic])
@@ -42,7 +46,6 @@ async def division_get(division_id: int):
 async def division_get():
     """Все отделы"""
     return await Division_Pydantic.from_queryset(Division.all())
-
 
 @router_users.post("/create", response_model=User_Pydantic)
 async def create_user(user: UserIn_Pydantic):
