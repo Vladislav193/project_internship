@@ -21,6 +21,13 @@ CREATE TABLE IF NOT EXISTS "user" (
     "finish_business_trip" DATE,
     "division_id" INT REFERENCES "division" ("id") ON DELETE CASCADE
 );
+CREATE TABLE IF NOT EXISTS "taskservice" (
+    "id" SERIAL NOT NULL PRIMARY KEY,
+    "name" VARCHAR(100) NOT NULL,
+    "description" VARCHAR(255) NOT NULL,
+    "employee_id" INT NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE,
+    "task_division_id" INT NOT NULL REFERENCES "division" ("id") ON DELETE CASCADE
+);
 CREATE TABLE IF NOT EXISTS "aerich" (
     "id" SERIAL NOT NULL PRIMARY KEY,
     "version" VARCHAR(255) NOT NULL,

@@ -20,7 +20,7 @@ DATABASE_CONFIG = {
     },
     'apps': {
         'models': {
-            'models': ["app.users.models", "app.division.models", "aerich.models"],  #  aerich.models migration model
+            'models': ["app.users.models", "app.division.models", "app.task_service.models", "aerich.models"],  #  aerich.models migration model
             'default_connection': 'default',
         }
     },
@@ -29,7 +29,6 @@ DATABASE_CONFIG = {
 
 # Асинхронная функция для инициализации Tortoise ORM
 async def init():
-    print("bybwbkbf")
     await Tortoise.init(config=DATABASE_CONFIG)
     await Tortoise.generate_schemas()  # Создание схем на основе моделей
 

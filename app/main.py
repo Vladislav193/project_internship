@@ -1,12 +1,15 @@
 from fastapi import FastAPI
 from app.users.schemas import User_Pydantic, UserIn_Pydantic
 from app.division.schemas import Division_Pydantic, DivisionIn_Pydantic
+from app.task_service.schemas import Task_Pydantic, TaskIN_Pydantic
 from app.users.models import User
 from app.division.models import Division
+from app.task_service.models import TaskService
 # from app.database import init_db
 from typing import List
 from app.division.router import router as router_division
 from app.users.router import router as router_users
+from app.task_service.router import router as router_task
 from app.users.validator_business_trip import valid_business_trip
 from .config import init
 
@@ -65,5 +68,14 @@ async def update_user(user_id: int, user: UserIn_Pydantic):
     return await User_Pydantic.from_queryset_single(User.get(id=user_id))
 
 
+@router_task.post("/create", response_model=Task_Pydantic)
+async def task_create(task: TaskIN_Pydantic):
+    print(task)
+    task_service = await TaskService.create(**task.model_dump(exclude_unset=True))
+    return await Task_Pydantic.from_tortoise_orm(task_service)
+
+
+
 app.include_router(router_division)
 app.include_router(router_users)
+app.include_router(router_task)

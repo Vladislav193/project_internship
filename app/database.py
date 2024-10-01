@@ -65,10 +65,10 @@ async def shutdown():
 register_tortoise(
         app,
         # db_url="sqlite://:db.sqlite3",
-        modules={"models": ["app.users.models", "app.division.models", "aerich.models"]},
+        modules={"models": ["app.users.models", "app.division.models", "app.task_service.models", "aerich.models"]},
         generate_schemas=True,
         add_exception_handlers=True,
     )
 
 
-Tortoise.init_models(["app.users.models", "app.division.models"], "models")
+Tortoise.init_models(["app.users.models", "app.division.models", "app.task_service.models"], "models")
